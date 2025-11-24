@@ -40,8 +40,8 @@ public class Point {
 //            return "\uD83D\uDC05";
 //        }
 
-        return x + " " + y;
-//        return "---";
+//        return x + " " + y;
+        return "---";
     }
 
     public Point(int x, int y, String show) {

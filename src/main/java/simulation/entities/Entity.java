@@ -4,7 +4,19 @@ package simulation.entities;
 
 import simulation.Point;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Entity {
+    public void setEntitiesMap(Map<Point, Entity> entitiesMap) {
+        this.entitiesMap = entitiesMap;
+    }
+
+    public Map<Point, Entity> getEntitiesMap() {
+        return entitiesMap;
+    }
+
+    private Map<Point, Entity> entitiesMap = new HashMap<>();
     private Point point;
     private String logo;
 
