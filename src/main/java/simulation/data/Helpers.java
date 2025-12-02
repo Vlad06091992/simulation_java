@@ -1,6 +1,10 @@
 package simulation.data;
 
+import simulation.entities.Entity;
+
 import java.util.*;
+
+import simulation.data.Field;
 
 public class Helpers {
 
@@ -50,7 +54,7 @@ public class Helpers {
         return count;
     }
 
-    public  int findPathLength(Point start, Point end) {
+    public int findPathLength(Point start, Point end) {
         int x = findPathLength(start.getX(), end.getX());
         int y = findPathLength(start.getY(), end.getY());
 
@@ -145,5 +149,50 @@ public class Helpers {
 
         return pointList.get(0);
 
+    }
+
+
+    public List<Point> getAvailablePoints(Point currPosition, Field field, Map<Point, Entity> entitiesMap) {
+        System.out.println("currPosition: " + currPosition.toString());
+        Field.Size size = field.getSize();
+        int width = size.getWidth();
+        int height = size.getHeight();
+
+        List<Point> pointList = new ArrayList<>();
+
+        int currX = currPosition.getX();
+        int currY = currPosition.getY();
+
+        int bottomY = currY - 1;
+        int leftX = currX - 1;
+
+        int rightX = currX + 1;
+        int topY = currY + 1;
+
+        List<Point> pointMap = new ArrayList<>();
+        pointMap.add(new Point(leftX, currY));
+        pointMap.add(new Point(leftX, topY));
+        pointMap.add(new Point(currX, topY));
+        pointMap.add(new Point(rightX, topY));
+        pointMap.add(new Point(rightX, currY));
+        pointMap.add(new Point(rightX, bottomY));
+        pointMap.add(new Point(currX, bottomY));
+        pointMap.add(new Point(leftX, bottomY));
+
+
+
+        for (Point p : pointMap) {
+            int x = p.getX();
+            int y = p.getY();
+
+            boolean b = (x > 0 && y > 0) && (x <= width && y <= height) && (!entitiesMap.containsKey(p));
+            if (b) {
+                pointList.add(p);
+            } else {
+                System.out.println("hm");
+            }
+
+        }
+        return pointList;
     }
 }

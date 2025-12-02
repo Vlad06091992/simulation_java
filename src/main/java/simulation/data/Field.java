@@ -10,7 +10,22 @@ public class Field {
     int x;
     int y;
 
+    public static class Size {
+        private final int width;
+        private final int height;
 
+        public Size(int width, int height) {
+            this.width = width;
+            this.height = height;
+        }
+
+        // Добавьте геттеры!
+        public int getWidth() { return width; }
+        public int getHeight() { return height; }
+    }
+    public  Size getSize() {
+        return new Size(x,y);
+    }
 
     public Field(int x, int y) {
         this.x = x;
@@ -28,19 +43,19 @@ public class Field {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         } catch (Exception E) {
-            System.out.println(E);
+//            System.out.println(E);
         }
     }
 
 
 
     public void showMap(Map<Point, Entity> entities) {
-        cleanConsoleOutput();
+//        cleanConsoleOutput();
 
         String field = "";
         for (int i = 0; i < points.size(); i++) {
 
-            String end = (i + 1) % x == 0 ? "\n" : " ";
+            String end = (i + 1) % x == 0 ? "\n" : "  ";
 
 
             Point point = points.get(i);

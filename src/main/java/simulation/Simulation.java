@@ -16,7 +16,7 @@ public class Simulation {
     private static Field field;
     private static final Map<Point, Entity> entitiesMap = new HashMap<>();
     private static final ArrayList<Entity> entities = new ArrayList<>(Arrays.asList(
-            new Tiger(),
+//            new Tiger(),
 //            new Wolf(),
 //            new Fox(),
 //            new Crocodile(),
@@ -27,8 +27,8 @@ public class Simulation {
             new Sheep(),
 //            new Grass(),
 //            new Grass(),
-//            new Grass(),
             new Grass()
+//            new Grass()
 //            new Goat()
     ));
 
@@ -37,14 +37,22 @@ public class Simulation {
 
     public void run(int x,int y,int sleep) throws InterruptedException {
         init(x,y);
-        while (true) {
-            Thread.sleep(sleep);
+//        while (true) {
+//            Thread.sleep(sleep);
             action();
-        }
+//        }
 
     }
 
     private static void action() throws InterruptedException {
+
+        // даем сущности доступ к полю с координатами других существ
+        for (int i = 0; i < entities.size(); i++) {
+            Entity entity = entities.get(i);
+            entity.setEntitiesMap(entitiesMap);
+            entity.setField(field);
+        }
+
 
 //сущности меняют свои позиции
         for (Entity entity : entities) {
@@ -53,20 +61,15 @@ public class Simulation {
             }
         }
 
-//        entities.clear();
         entitiesMap.clear();
 
-        //наносим их на карту
-        for (int i = 0; i < entities.size(); i++) {
-            Entity entity = entities.get(i);
-            entitiesMap.put(entity.getPoint(), entity);
-        }
+//        //наносим их на карту
+//        for (int i = 0; i < entities.size(); i++) {
+//            Entity entity = entities.get(i);
+//            entitiesMap.put(entity.getPoint(), entity);
+//        }
 
-        // даем сущности доступ к полю с координатами других существ
-        for (int i = 0; i < entities.size(); i++) {
-            Entity entity = entities.get(i);
-            entity.setEntitiesMap(entitiesMap);
-        }
+
 
         field.showMap(entitiesMap);
 

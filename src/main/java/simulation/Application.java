@@ -7,6 +7,6 @@ package simulation;
 public class Application {
     public static void main(String[] args) throws InterruptedException {
         Simulation simulation = new Simulation();
-        simulation.run(12,12,900);
+        simulation.run(5,5,900);
     }
 }

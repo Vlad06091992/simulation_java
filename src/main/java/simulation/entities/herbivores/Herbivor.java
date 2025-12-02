@@ -1,6 +1,5 @@
 package simulation.entities.herbivores;
 
-import simulation.data.Helpers;
 import simulation.data.Point;
 import simulation.entities.Animal;
 import simulation.entities.Entity;
@@ -12,34 +11,25 @@ import java.util.Map;
 
 public class Herbivor extends Animal {
 
-    Helpers helpers = new Helpers();
-
     public Herbivor(String logo) {
         super(logo);
     }
 
     public Point findNearestGrass() {
-
-        Integer min = 1000;
-
         Map<Integer, Entity> grassPoints = new HashMap();
-
         Map<Point, Entity> entitiesMap = super.getEntitiesMap();
 
         for (Entity entity : entitiesMap.values()) {
             if (entity instanceof Grass) {
                 int value = helpers.findPathLength(super.getPoint(), entity.getPoint());
                 grassPoints.put(value, entity);
-                if (value < min) {
-                    min = value;
+                if (value < minimalValue) {
+                    minimalValue = value;
                 }
             }
 
         }
-        Point target = grassPoints.get(min).getPoint();
-
-        return target;
-
+        return grassPoints.get(minimalValue).getPoint();
     }
 
     @Override
@@ -47,9 +37,13 @@ public class Herbivor extends Animal {
 
         Point point = super.getPoint();
         Point target = findNearestGrass();
+        List<Point> availablePoints = helpers.getAvailablePoints(point,getField(),getEntitiesMap());
 
 //        List<Point> points = helpers.generateCoordinates(point, target);
         Point nextPoint = helpers.generateNextStepCoordinates(point, target);
+
+        System.out.println("availablePoints:" + availablePoints.toString());
+
         int pathLength = helpers.findPathLength(point, target);
         if (pathLength == 0) {
             return;

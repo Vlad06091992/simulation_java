@@ -2,6 +2,7 @@ package simulation.entities;
 
 
 
+import simulation.data.Field;
 import simulation.data.Point;
 
 import java.util.HashMap;
@@ -11,6 +12,16 @@ public abstract class Entity {
     private Map<Point, Entity> entitiesMap = new HashMap<>();
     private Point point;
     private String logo;
+
+    public Field getField() {
+        return field;
+    }
+
+    public void setField(Field field) {
+        this.field = field;
+    }
+
+    private Field field;
 
     public Entity(String logo) {
         this.logo = logo;
@@ -28,7 +39,7 @@ public abstract class Entity {
 
 
     public String getLogo() {
-        return logo;
+        return " " + logo;
     }
 
 

@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Predator extends Animal {
-
-    Helpers helpers = new Helpers();
-
     public void run() {
 
         Point point = super.getPoint();
