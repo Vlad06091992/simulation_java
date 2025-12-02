@@ -152,13 +152,13 @@ public class Helpers {
     }
 
 
-    public List<Point> getAvailablePoints(Point currPosition, Field field, Map<Point, Entity> entitiesMap) {
+    public Set<Point> getAvailablePoints(Point currPosition, Field field, Map<Point, Entity> entitiesMap) {
         System.out.println("currPosition: " + currPosition.toString());
         Field.Size size = field.getSize();
         int width = size.getWidth();
         int height = size.getHeight();
 
-        List<Point> pointList = new ArrayList<>();
+        Set<Point> pointList = new HashSet<>();
 
         int currX = currPosition.getX();
         int currY = currPosition.getY();

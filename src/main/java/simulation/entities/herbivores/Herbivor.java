@@ -5,9 +5,7 @@ import simulation.entities.Animal;
 import simulation.entities.Entity;
 import simulation.entities.statics.Grass;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Herbivor extends Animal {
 
@@ -37,18 +35,28 @@ public class Herbivor extends Animal {
 
         Point point = super.getPoint();
         Point target = findNearestGrass();
-        List<Point> availablePoints = helpers.getAvailablePoints(point,getField(),getEntitiesMap());
+        Set<Point> availablePoints = helpers.getAvailablePoints(point,getField(),getEntitiesMap());
 
-//        List<Point> points = helpers.generateCoordinates(point, target);
+
         Point nextPoint = helpers.generateNextStepCoordinates(point, target);
 
         System.out.println("availablePoints:" + availablePoints.toString());
+
+        Optional<Point> randomPoint = availablePoints.stream()
+                .skip(new Random().nextInt(availablePoints.size()))
+                .findFirst();
+
+        if (randomPoint.isEmpty()) {
+            return;
+        }
+
+        Point targetPoint = availablePoints.contains(nextPoint) ? nextPoint : randomPoint.get();
 
         int pathLength = helpers.findPathLength(point, target);
         if (pathLength == 0) {
             return;
         } else {
-            super.setPoint(nextPoint);
+            super.setPoint(targetPoint);
         }
     }
 
