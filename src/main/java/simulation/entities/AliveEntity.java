@@ -4,7 +4,7 @@ import simulation.data.Utils;
 
 public class AliveEntity extends Entity {
     protected Utils utils = new Utils();
-    private int health;
+    protected int health;
 
     public AliveEntity(String logo, int health) {
         super(logo);

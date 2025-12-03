@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Entity {
-    private Map<Point, Entity> entitiesMap = new HashMap<>();
+    protected Map<Point, Entity> entitiesMap = new HashMap<>();
     private Point point;
     private String logo;
 
@@ -52,4 +52,13 @@ public abstract class Entity {
         this.point = point;
     }
 
+    @Override
+    public String toString() {
+        return "Entity{" +
+//                "entitiesMap=" + entitiesMap +
+                ", point=" + point +
+                ", logo='" + logo + '\'' +
+                ", field=" + field +
+                '}';
+    }
 }

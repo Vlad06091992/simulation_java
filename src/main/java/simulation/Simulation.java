@@ -5,7 +5,10 @@ import simulation.data.Utils;
 import simulation.data.Point;
 import simulation.entities.AliveEntity;
 import simulation.entities.Entity;
+import simulation.entities.herbivores.Herbivore;
 import simulation.entities.herbivores.entities.*;
+import simulation.entities.predators.Predator;
+import simulation.entities.predators.entities.*;
 import simulation.entities.statics.Grass;
 
 import java.util.*;
@@ -21,14 +24,14 @@ public class Simulation {
 //            new Fox(),
 //            new Crocodile(),
 //            new Bear(),
-            new Rabbit(),
-            new Cow(),
+//            new Rabbit(),
+//            new Cow(),
 //            new Deer(),
-//            new Sheep(),
-//            new Grass(),
-            new Grass(),
-            new Grass(),
+            new Sheep(),
             new Grass()
+//            new Grass(),
+//            new Grass(),
+//            new Grass(),
 //            new Goat()
     ));
 
@@ -37,11 +40,10 @@ public class Simulation {
 
     public void run(int x,int y,int sleep) throws InterruptedException {
         init(x, y);
-        while (true) {
+//        while (true) {
+        for (;;) {
             Thread.sleep(sleep);
             action();
-//        }
-
         }
     }
 
@@ -49,44 +51,34 @@ public class Simulation {
 
         entities = entities.stream()
         .filter(entity -> {
-                    if (!(entity instanceof Grass)) {
-                        return true;  // явный возврат true
-                    } else {
-
-//                        System.out.println(((Animal) entity).getHealth());
-                        // Явный возврат false или true в зависимости от условия
+                    if ((entity instanceof Grass)) {
                         return ((AliveEntity) entity).getHealth() > 0;
-//                        return false;
+//                        return true;  // явный возврат true
+                    } else {
+                        Class<? extends Entity> aClass = entity.getClass();
+                        System.out.println(aClass);
+                        return true;
                     }
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
 
-//        System.out.println(entities.get(0).toString());
-//        System.out.println(entities.get(1).toString());
 
-        // даем сущности доступ к полю с координатами других существ
+        //сущности меняют свои позиции
         for (int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
-            entity.setEntitiesMap(entitiesMap);
-            entity.setField(field);
-        }
-
-
-//сущности меняют свои позиции
-        for (Entity entity : entities) {
             if (entity instanceof AliveEntity) {
+             //по идее вот здесь сущности совершают ход, опираясь на старое состояние entitiesMap, чтобы не накладываться друг на друга
                 ((AliveEntity) entity).run();
             }
         }
 
-        entitiesMap.clear();
-
-        //наносим их на карту
-        for (int i = 0; i < entities.size(); i++) {
-            Entity entity = entities.get(i);
-            entitiesMap.put(entity.getPoint(), entity);
-        }
-
+////        entitiesMap.clear();
+//
+//        //наносим их на карту
+//        for (int i = 0; i < entities.size(); i++) {
+//            Entity entity = entities.get(i);
+////            entitiesMap.put(entity.getPoint(), entity);
+//        }
 
 
         field.showMap(entitiesMap);
@@ -115,6 +107,7 @@ public class Simulation {
         for (int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
             entity.setEntitiesMap(entitiesMap);
+            entity.setField(field);
         }
 
         field.showMap(entitiesMap);
