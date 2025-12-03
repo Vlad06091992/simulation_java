@@ -13,6 +13,7 @@ public abstract class Entity {
     private Point point;
     private String logo;
 
+
     public Field getField() {
         return field;
     }

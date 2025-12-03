@@ -4,9 +4,7 @@ import simulation.entities.Entity;
 
 import java.util.*;
 
-import simulation.data.Field;
-
-public class Helpers {
+public class Utils {
 
     Set<Integer> xSet = new HashSet<>();
     Set<Integer> ySet = new HashSet<>();
@@ -58,7 +56,11 @@ public class Helpers {
         int x = findPathLength(start.getX(), end.getX());
         int y = findPathLength(start.getY(), end.getY());
 
-        return Math.max(x, y);
+        int moduleX = Math.abs(start.getX() - end.getX());
+        int moduleY = Math.abs(start.getY() - end.getY());
+
+        if(moduleX <= 1 && moduleY <= 1) return 0;
+        return Math.min(x, y);
     }
 
     private void findPath(int start, int end, List<Integer> coordinates) {
@@ -194,5 +196,9 @@ public class Helpers {
 
         }
         return pointList;
+    }
+
+    public int getMaxInt(){
+      return Integer.MAX_VALUE;
     }
 }
