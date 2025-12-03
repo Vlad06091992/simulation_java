@@ -21,14 +21,14 @@ public class Simulation {
 //            new Fox(),
 //            new Crocodile(),
 //            new Bear(),
-//            new Rabbit(),
+            new Rabbit(),
             new Cow(),
 //            new Deer(),
 //            new Sheep(),
 //            new Grass(),
-//            new Grass(),
+            new Grass(),
+            new Grass(),
             new Grass()
-//            new Grass(),
 //            new Goat()
     ));
 

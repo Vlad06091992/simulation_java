@@ -9,12 +9,16 @@ import java.util.*;
 
 public class Herbivore extends AliveEntity {
 
-    private int pathLength = utils.getMaxInt();
+
     public Herbivore(String logo) {
         super(logo, 300);
     }
 
     public Optional<Point> findNearestGrass() {
+
+      int pathLength = utils.getMaxInt();
+
+
         Map<Integer, Entity> grassPoints = new HashMap();
         Map<Point, Entity> entitiesMap = super.getEntitiesMap();
 
@@ -59,8 +63,6 @@ public class Herbivore extends AliveEntity {
         if (length == 0) {
             eat(target.get());
             return;
-        } else {
-
         }
 
         Point nextPoint = utils.generateNextStepCoordinates(point, target.get());
