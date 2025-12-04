@@ -19,7 +19,6 @@ public class Field {
             this.height = height;
         }
 
-        // Добавьте геттеры!
         public int getWidth() { return width; }
         public int getHeight() { return height; }
     }
@@ -50,7 +49,7 @@ public class Field {
 
 
     public void showMap(Map<Point, Entity> entities) {
-//        cleanConsoleOutput();
+        cleanConsoleOutput();
 
         String field = "";
         for (int i = 0; i < points.size(); i++) {

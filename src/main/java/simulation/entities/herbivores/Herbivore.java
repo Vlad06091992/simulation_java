@@ -16,8 +16,6 @@ public class Herbivore extends AliveEntity {
     public Optional<Point> findNearestGrass() {
 
         int pathLength = utils.getMaxInt();
-
-
         Map<Integer, Entity> grassPoints = new HashMap();
         Map<Point, Entity> entitiesMap = super.getEntitiesMap();
 
@@ -43,8 +41,6 @@ public class Herbivore extends AliveEntity {
     public Optional<Point> findNearestPredator() {
 
         int pathLength = utils.getMaxInt();
-
-
         Map<Integer, Entity> predatorPoints = new HashMap();
         Map<Point, Entity> entitiesMap = super.getEntitiesMap();
 
@@ -68,9 +64,6 @@ public class Herbivore extends AliveEntity {
     }
 
     public void eat(Point grassPoint) {
-
-        int damage = 1000;
-
         Grass grass = (Grass) super.getEntitiesMap().get(grassPoint);
         grass.beEaten(damage);
     }
@@ -84,10 +77,6 @@ public class Herbivore extends AliveEntity {
         Set<Point> availablePoints = utils.getAvailablePoints(point, getField(), getEntitiesMap());
 
         int n = new Random().nextInt(availablePoints.size());
-
-//        if(n < 0){
-//            return;
-//        }
         Optional<Point> randomPoint = availablePoints.stream()
                 .skip(n)
                 .findFirst();
@@ -115,11 +104,6 @@ public class Herbivore extends AliveEntity {
             eat(nearestGrass.get());
             return;
         }
-
-
-
-
-
 
 
         Point nextPoint = utils.generateNextStepCoordinates(point, nearestGrass.get());

@@ -58,7 +58,6 @@ public class Simulation {
 
     public void run(int x, int y, int sleep) throws InterruptedException {
         init(x, y);
-//        for (; ; ) {
         while (gameRun) {
             Thread.sleep(sleep);
             action();
@@ -99,7 +98,6 @@ public class Simulation {
             }
 
             if (entity instanceof AliveEntity) {
-                //по идее вот здесь сущности совершают ход, опираясь на старое состояние entitiesMap, чтобы не накладываться друг на друга
                 ((AliveEntity) entity).run();
             }
         }
@@ -126,7 +124,6 @@ public class Simulation {
 
         // сущностей создали, надо сгенерировать им позиции
         for (int i = 0; i < entities.size(); i++) {
-//            Point currentPoint = new Point(helpers.getRandomInt(x, "x"), helpers.getRandomInt(y, "y"));
             Point point = helpers.getUniqRandomPoint(x);
             Entity entity = entities.get(i);
             entity.setPoint(point);
