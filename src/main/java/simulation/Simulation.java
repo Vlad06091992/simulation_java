@@ -23,7 +23,7 @@ public class Simulation {
 //            new Tiger(),
 //            new Wolf(),
 //            new Fox(),
-//            new Crocodile(),
+            new Crocodile(),
 //            new Bear(),
 //            new Rabbit(),
 //            new Cow(),

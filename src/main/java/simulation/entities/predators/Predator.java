@@ -31,6 +31,12 @@ public class Predator extends AliveEntity {
         }
 
         int length = utils.findPathLength(point,nearestHerbivore.get());
+
+        if (length == 0) {
+            eat(nearestHerbivore.get());
+            return;
+        }
+
         Set<Point> availablePoints = utils.getAvailablePoints(point, getField(), getEntitiesMap());
         Optional<Point> randomPoint = availablePoints.stream()
                 .skip(new Random().nextInt(availablePoints.size()))
@@ -42,15 +48,14 @@ public class Predator extends AliveEntity {
             return;
         }
 
-        if (length == 0) {
-            eat(nearestHerbivore.get());
-            return;
-        }
+
 
 
         Point nextPoint = utils.generateNextStepCoordinates(point, nearestHerbivore.get());
         Point targetPoint = availablePoints.contains(nextPoint) ? nextPoint : randomPoint.get();
+        entitiesMap.remove(getPoint());
         super.setPoint(targetPoint);
+        entitiesMap.put(getPoint(), this);
     }
 
     public Predator(String logo) {
