@@ -2,75 +2,19 @@ package simulation.entities.herbivores;
 
 import simulation.data.Point;
 import simulation.entities.AliveEntity;
-import simulation.entities.Entity;
 import simulation.entities.predators.Predator;
 import simulation.entities.statics.Grass;
 
-import java.util.*;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 
 public class Herbivore extends AliveEntity {
     public Herbivore(String logo, int health, int damage) {
         super(logo, health, damage);
     }
 
-    public Optional<Point> findNearestGrass() {
-
-        int pathLength = utils.getMaxInt();
-
-
-        Map<Integer, Entity> grassPoints = new HashMap();
-        Map<Point, Entity> entitiesMap = super.getEntitiesMap();
-
-        for (Entity entity : entitiesMap.values()) {
-            if (entity instanceof Grass) {
-                int value = utils.findPathLength(super.getPoint(), entity.getPoint());
-                grassPoints.put(value, entity);
-                if (value < pathLength) {
-                    pathLength = value;
-                }
-            }
-
-        }
-        Entity entity = grassPoints.get(pathLength);
-
-        if (entity == null) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable(entity.getPoint());
-    }
-
-    public Optional<Point> findNearestPredator() {
-
-        int pathLength = utils.getMaxInt();
-
-
-        Map<Integer, Entity> predatorPoints = new HashMap();
-        Map<Point, Entity> entitiesMap = super.getEntitiesMap();
-
-        for (Entity entity : entitiesMap.values()) {
-            if (entity instanceof Predator) {
-                int value = utils.findPathLength(super.getPoint(), entity.getPoint());
-                predatorPoints.put(value, entity);
-                if (value < pathLength) {
-                    pathLength = value;
-                }
-            }
-
-        }
-        Entity entity = predatorPoints.get(pathLength);
-
-        if (entity == null) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable(entity.getPoint());
-    }
-
     public void eat(Point grassPoint) {
-
-        int damage = 1000;
-
         Grass grass = (Grass) super.getEntitiesMap().get(grassPoint);
         grass.beEaten(damage);
     }
@@ -79,19 +23,14 @@ public class Herbivore extends AliveEntity {
     public void run() {
 
         Point point = super.getPoint();
-        Optional<Point> nearestGrass = findNearestGrass();
-        Optional<Point> nearestPredator = findNearestPredator();
+        Optional<Point> nearestGrass = findNearestEntity(Grass.class);
+        Optional<Point> nearestPredator = findNearestEntity(Predator.class);
         Set<Point> availablePoints = utils.getAvailablePoints(point, getField(), getEntitiesMap());
 
         int n = new Random().nextInt(availablePoints.size());
-
-//        if(n < 0){
-//            return;
-//        }
         Optional<Point> randomPoint = availablePoints.stream()
                 .skip(n)
                 .findFirst();
-
 
 
         if (nearestGrass.isEmpty() || randomPoint.isEmpty()) {
@@ -103,9 +42,7 @@ public class Herbivore extends AliveEntity {
 
             if (lengthToPredator < 2) {
 
-                entitiesMap.remove(getPoint());
-                super.setPoint(randomPoint.get());
-                entitiesMap.put(getPoint(), this);
+                super.move(randomPoint.get());
                 return;
             }
         }
@@ -117,16 +54,9 @@ public class Herbivore extends AliveEntity {
         }
 
 
-
-
-
-
-
-        Point nextPoint = utils.generateNextStepCoordinates(point, nearestGrass.get());
+        Point nextPoint = utils.generateNextStep(point, nearestGrass.get());
         Point targetPoint = availablePoints.contains(nextPoint) ? nextPoint : randomPoint.get();
-        entitiesMap.remove(getPoint());
-        super.setPoint(targetPoint);
-        entitiesMap.put(getPoint(), this);
+        super.move(targetPoint);
     }
 
 

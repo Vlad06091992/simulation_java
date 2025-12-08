@@ -51,14 +51,4 @@ public abstract class Entity {
     public void setPoint(Point point) {
         this.point = point;
     }
-
-    @Override
-    public String toString() {
-        return "Entity{" +
-//                "entitiesMap=" + entitiesMap +
-                ", point=" + point +
-                ", logo='" + logo + '\'' +
-                ", field=" + field +
-                '}';
-    }
 }

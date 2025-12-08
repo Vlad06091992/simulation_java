@@ -4,7 +4,6 @@ import simulation.data.Point;
 import simulation.entities.AliveEntity;
 import simulation.entities.Entity;
 import simulation.entities.herbivores.Herbivore;
-import simulation.entities.statics.Grass;
 
 import java.util.*;
 
@@ -22,12 +21,10 @@ public class Predator extends AliveEntity {
 
     @Override
     public void run() {
-
         this.health = this.health - 10;
 
-
         Point point = super.getPoint();
-        Optional<Point> nearestHerbivore = findNearestHerbivore();
+        Optional<Point> nearestHerbivore = findNearestEntity(Herbivore.class);
 
         if(nearestHerbivore.isEmpty()){
             return;
@@ -51,44 +48,9 @@ public class Predator extends AliveEntity {
             return;
         }
 
-
-
-
-        Point nextPoint = utils.generateNextStepCoordinates(point, nearestHerbivore.get());
+        Point nextPoint = utils.generateNextStep(point, nearestHerbivore.get());
         Point targetPoint = availablePoints.contains(nextPoint) ? nextPoint : randomPoint.get();
-        entitiesMap.remove(getPoint());
-        super.setPoint(targetPoint);
-        entitiesMap.put(getPoint(), this);
-    }
-
-//    public Predator(String logo, int health, int damage) {
-//        super(logo, 100);
-//    }
-
-
-    public Optional<Point> findNearestHerbivore() {
-
-        int pathLength = utils.getMaxInt();
-
-
-        Map<Integer, Entity> grassPoints = new HashMap();
-        Map<Point, Entity> entitiesMap = super.getEntitiesMap();
-
-        for (Entity entity : entitiesMap.values()) {
-            if (entity instanceof Herbivore) {
-                int value = utils.findPathLength(super.getPoint(), entity.getPoint());
-                grassPoints.put(value, entity);
-                if (value < pathLength) {
-                    pathLength = value;
-                }
-            }
-
-        }
-        Entity entity = grassPoints.get(pathLength);
-
-        if(entity == null){return Optional.empty();}
-
-        return Optional.ofNullable(entity.getPoint());
+        super.move(targetPoint);
     }
 }
 
