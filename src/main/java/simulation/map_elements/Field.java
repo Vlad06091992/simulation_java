@@ -1,6 +1,6 @@
-package simulation.data;
+package simulation.map_elements;
 
-import simulation.entities.Entity;
+import simulation.entities.base.Entity;
 
 import java.util.*;
 
@@ -10,7 +10,7 @@ public class Field {
     int x;
     int y;
 
-    public static class Size {
+    public class Size {
         private final int width;
         private final int height;
 

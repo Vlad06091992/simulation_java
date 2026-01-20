@@ -1,15 +1,13 @@
-package simulation.entities.herbivores;
+package simulation.entities.base;
 
-import simulation.data.Point;
-import simulation.entities.AliveEntity;
-import simulation.entities.predators.Predator;
-import simulation.entities.statics.Grass;
+import simulation.map_elements.Point;
+import simulation.entities.static_environment.Grass;
 
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
-public class Herbivore extends AliveEntity {
+public class Herbivore extends Creature {
     public Herbivore(String logo, int health, int damage) {
         super(logo, health, damage);
     }
@@ -17,10 +15,11 @@ public class Herbivore extends AliveEntity {
     public void eat(Point grassPoint) {
         Grass grass = (Grass) super.getEntitiesMap().get(grassPoint);
         grass.beEaten(damage);
+        super.eat();
     }
 
     @Override
-    public void run() {
+    public void makeMove() {
 
         Point point = super.getPoint();
         Optional<Point> nearestGrass = findNearestEntity(Grass.class);
@@ -42,7 +41,7 @@ public class Herbivore extends AliveEntity {
 
             if (lengthToPredator < 2) {
 
-                super.move(randomPoint.get());
+                super.moving(randomPoint.get());
                 return;
             }
         }
@@ -56,7 +55,7 @@ public class Herbivore extends AliveEntity {
 
         Point nextPoint = utils.generateNextStep(point, nearestGrass.get());
         Point targetPoint = availablePoints.contains(nextPoint) ? nextPoint : randomPoint.get();
-        super.move(targetPoint);
+        super.moving(targetPoint);
     }
 
 

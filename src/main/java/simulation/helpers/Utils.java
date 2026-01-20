@@ -1,6 +1,8 @@
-package simulation.data;
+package simulation.helpers;
 
-import simulation.entities.Entity;
+import simulation.entities.base.Entity;
+import simulation.map_elements.Field;
+import simulation.map_elements.Point;
 
 import java.util.*;
 

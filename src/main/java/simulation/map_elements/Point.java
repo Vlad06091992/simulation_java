@@ -1,4 +1,4 @@
-package simulation.data;
+package simulation.map_elements;
 
 import java.util.Objects;
 

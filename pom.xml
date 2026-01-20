@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.microservices_java</groupId>
-  <artifactId>simulation</artifactId>
+  <artifactId>simulationRunner</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>simulation</name>
+  <name>simulationRunner</name>
   <url>http://maven.apache.org</url>
 
   <properties>

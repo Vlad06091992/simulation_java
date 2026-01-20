@@ -1,6 +1,6 @@
-package simulation.entities.herbivores.entities;
+package simulation.entities.herbivores;
 
-import simulation.entities.herbivores.Herbivore;
+import simulation.entities.base.Herbivore;
 
 public class Sheep extends Herbivore {
     public Sheep(int health, int damage) {

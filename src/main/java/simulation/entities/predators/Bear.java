@@ -1,6 +1,6 @@
-package simulation.entities.predators.entities;
+package simulation.entities.predators;
 
-import simulation.entities.predators.Predator;
+import simulation.entities.base.Predator;
 
 public class Bear extends Predator {
     public Bear(int health, int damage) {

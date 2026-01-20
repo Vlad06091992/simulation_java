@@ -1,13 +1,10 @@
-package simulation.entities.predators;
+package simulation.entities.base;
 
-import simulation.data.Point;
-import simulation.entities.AliveEntity;
-import simulation.entities.Entity;
-import simulation.entities.herbivores.Herbivore;
+import simulation.map_elements.Point;
 
 import java.util.*;
 
-public class Predator extends AliveEntity {
+public class Predator extends Creature {
 
     public Predator(String logo, int health, int damage) {
         super(logo, health,damage);
@@ -16,11 +13,12 @@ public class Predator extends AliveEntity {
     public void eat(Point herbivorePoint) {
         Herbivore herbivore = (Herbivore) super.getEntitiesMap().get(herbivorePoint);
         herbivore.beEaten(damage);
+        super.eat();
     }
 
 
     @Override
-    public void run() {
+    public void makeMove() {
         this.health = this.health - 10;
 
         Point point = super.getPoint();
@@ -50,7 +48,7 @@ public class Predator extends AliveEntity {
 
         Point nextPoint = utils.generateNextStep(point, nearestHerbivore.get());
         Point targetPoint = availablePoints.contains(nextPoint) ? nextPoint : randomPoint.get();
-        super.move(targetPoint);
+        super.moving(targetPoint);
     }
 }
 

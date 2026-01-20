@@ -1,36 +1,29 @@
-package simulation.entities;
+package simulation.entities.base;
 
-import simulation.data.Point;
-import simulation.data.Utils;
+import simulation.map_elements.Point;
+import simulation.helpers.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class AliveEntity extends Entity {
+public abstract class Creature extends LivingEntity {
     protected Utils utils = new Utils();
-    protected int health;
     protected int damage;
 
-    public AliveEntity(String logo, int health, int damage) {
-        super(logo);
-        this.health = health;
+    public Creature(String logo, int health, int damage) {
+        super(logo, health);
         this.damage = damage;
     }
 
-    public void beEaten(int damage) {
-        this.health -= damage;
+    public void eat() {
+        this.health += this.damage;
     }
 
-    public void run() {
 
-    }
+    public abstract void makeMove();
 
-    public int getHealth() {
-        return health;
-    }
-
-    protected void move(Point targetPoint) {
+    protected void moving(Point targetPoint) {
         entitiesMap.remove(getPoint());
         super.setPoint(targetPoint);
         entitiesMap.put(getPoint(), this);
@@ -55,7 +48,9 @@ public abstract class AliveEntity extends Entity {
         }
         Entity entity = grassPoints.get(pathLength);
 
-        if(entity == null){return Optional.empty();}
+        if (entity == null) {
+            return Optional.empty();
+        }
 
         return Optional.ofNullable(entity.getPoint());
     }
